@@ -1,16 +1,21 @@
-from abc import abstractproperty
-from os import chdir, getcwd
+from os import chdir, getcwd, path
+from functools import partial
 from alembic import command
 from alembic.config import Config
+
+import stock_tracer
 from sqlalchemy import create_engine
 from sqlalchemy.exc import OperationalError
-from stock_tracer.library.db import db_base_url, db_name_ut
+from stock_tracer.library.db import db_base_url, db_name_ut, transaction
+
+transaction = partial(transaction, env="ut")
+
 
 class DBUnitTestMixin(object):
 
-    @abstractproperty
+    @property
     def migration_root(self):
-        pass
+        return path.dirname(stock_tracer.__file__)
 
     def setup_method(self, method):
         # drop database at the beginning of each test
