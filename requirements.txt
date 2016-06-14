@@ -1,0 +1,12 @@
+alembic==0.8.6
+Mako==1.0.4
+MarkupSafe==0.23
+MySQL-python==1.2.5
+pudb==2016.2
+py==1.4.31
+Pygments==2.1.3
+pytest==2.9.2
+python-editor==1.0
+PyYAML==3.11
+SQLAlchemy==1.0.13
+urwid==1.3.1
