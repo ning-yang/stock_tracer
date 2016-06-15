@@ -1,1 +1,2 @@
 from query_quote_operation import QueryQuoteOperation
+from add_stock_operation import AddStockOperation
