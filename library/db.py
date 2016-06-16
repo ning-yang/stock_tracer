@@ -18,16 +18,19 @@ engine_prod = create_engine(db_prod_url)
 Session = sessionmaker(expire_on_commit=False)
 
 @contextmanager
-def transaction():
-    is_unit_test = config.get("__unit_test__")
-    engine = engine_ut if is_unit_test else engine_prod
-    session = Session(bind=engine)
+def transaction(tx=None):
+    if tx:
+        yield tx
+    else:
+        is_unit_test = config.get("__unit_test__")
+        engine = engine_ut if is_unit_test else engine_prod
+        session = Session(bind=engine)
 
-    try:
-        yield session
-        session.commit()
-    except:
-        session.rollback()
-        raise
-    finally:
-        session.close()
+        try:
+            yield session
+            session.commit()
+        except:
+            session.rollback()
+            raise
+        finally:
+            session.close()

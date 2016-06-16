@@ -1,3 +1,3 @@
 from stock import Stock
 from quote import Quote
-from scheduled_action import UpdateQuoteAction
+from scheduled_action import ScheduledAction, UpdateQuoteAction

@@ -1,6 +1,6 @@
 import urllib2
 import json
-import datetime
+from datetime import datetime, timedelta
 from sqlalchemy import Column, Integer, DateTime, Boolean, String, func
 from stock_tracer.library import transaction
 from base import Base
@@ -22,13 +22,21 @@ class ScheduledAction(Base):
         'polymorphic_identity': 'scheduled_action'
     }
 
-    def run(self, *args, **kwargs):
+    def run(self, tx=None, *args, **kwargs):
         """run
 
         :param *args:
         :param **kwargs:
         """
-        self.execute(*args, **kwargs)
+        with transaction(tx=tx) as tx:
+            tx.add(self)
+            try:
+                self.execute(tx, *args, **kwargs)
+            except Exception as e:
+                print(e)
+                raise
+            finally:
+                self.action_date += timedelta(seconds=self.interval_in_second)
 
 class UpdateQuoteAction(ScheduledAction):
     __mapper_args__ = {
@@ -37,9 +45,9 @@ class UpdateQuoteAction(ScheduledAction):
 
     BASE_QUERY_URL = "http://finance.google.com/finance/info?client=ig&q={0}"
 
-    def execute(self):
+    def execute(self, tx=None):
         """execute"""
-        with transaction() as tx:
+        with transaction(tx=tx) as tx:
             stocks = tx.query(Stock)
             for stock in stocks:
                 url = self.BASE_QUERY_URL.format(stock)
@@ -51,7 +59,7 @@ class UpdateQuoteAction(ScheduledAction):
                     price = quote_json['l']
                     change = quote_json['c']
                     change_percentage = quote_json['cp']
-                    now = datetime.datetime.now()
+                    now = datetime.now()
 
                     quote = Quote(
                         price=price,
