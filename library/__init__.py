@@ -1,2 +1,2 @@
-from config import get_configuration
+from config import Configuration
 from db import transaction

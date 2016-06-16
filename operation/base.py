@@ -1,7 +1,7 @@
 class Base(object):
     """Base class for operation"""
-    def __init__(self, env):
-        self.env = env
+    def __init__(self):
+        pass
 
     def run(self):
         """run the operation"""

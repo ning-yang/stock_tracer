@@ -1,6 +1,7 @@
+from stock_tracer.library import transaction
 from stock_tracer.model import Stock, Quote
 from stock_tracer.operation import QueryQuoteOperation
-from stock_tracer.test.db import DBUnitTestMixin, transaction
+from stock_tracer.test.db import DBUnitTestMixin
 
 class TestQueryQuote(DBUnitTestMixin):
     """Test QueryQuote operation"""
@@ -10,7 +11,7 @@ class TestQueryQuote(DBUnitTestMixin):
         with transaction() as tx:
             tx.add(Stock(exchange="NASDAQ", symbol="AAPL"))
 
-        query_quote_op = QueryQuoteOperation(env="ut")
+        query_quote_op = QueryQuoteOperation()
         query_quote_op.run()
 
         with transaction() as tx:
@@ -21,7 +22,7 @@ class TestQueryQuote(DBUnitTestMixin):
         with transaction() as tx:
             tx.add(Stock(exchange="NASDAQ", symbol="XXXXX"))
 
-        query_quote_op = QueryQuoteOperation(env="ut")
+        query_quote_op = QueryQuoteOperation()
         query_quote_op.run()
 
         with transaction() as tx:

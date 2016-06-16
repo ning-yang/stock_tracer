@@ -1,24 +1,26 @@
 from contextlib import contextmanager
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from stock_tracer.library import get_configuration
+from stock_tracer.library import Configuration
 
-config = get_configuration("global")
-db_base_url = config["db_base_url"]
 
-db_name_ut = config["db_name_ut"]
+config = Configuration.getInstance()
+db_base_url = config.get("db_base_url")
+
+db_name_ut = config.get("db_name_ut")
 db_ut_url = db_base_url + "/" + db_name_ut
 engine_ut = create_engine(db_ut_url)
 
-db_name_prod = config["db_name_prod"]
+db_name_prod = config.get("db_name_prod")
 db_prod_url = db_base_url + "/" + db_name_prod
 engine_prod = create_engine(db_prod_url)
 
 Session = sessionmaker(expire_on_commit=False)
 
 @contextmanager
-def transaction(env="Prod"):
-    engine = engine_prod if env == "Prod" else engine_ut
+def transaction():
+    is_unit_test = config.get("__unit_test__")
+    engine = engine_ut if is_unit_test else engine_prod
     session = Session(bind=engine)
 
     try:

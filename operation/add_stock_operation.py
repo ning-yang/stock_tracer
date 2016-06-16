@@ -18,6 +18,6 @@ class AddStockOperation(Base):
 
     def execute(self):
         """execute the operation"""
-        with transaction(self.env) as tx:
+        with transaction() as tx:
             stock = Stock(exchange=self.exchange, symbol=self.symbol)
             tx.add(stock)

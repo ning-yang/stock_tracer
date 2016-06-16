@@ -9,7 +9,7 @@ class QueryQuoteOperation(Base):
     BASE_QUERY_URL = "http://finance.google.com/finance/info?client=ig&q={0}"
 
     def execute(self):
-        with transaction(self.env) as tx:
+        with transaction() as tx:
             stocks = tx.query(Stock)
             for stock in stocks:
                 url = self.BASE_QUERY_URL.format(stock)

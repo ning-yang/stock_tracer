@@ -1,5 +1,6 @@
+from stock_tracer.library import transaction
 from stock_tracer.model import Stock, Quote
-from stock_tracer.test.db import DBUnitTestMixin, transaction
+from stock_tracer.test.db import DBUnitTestMixin
 
 class TestQuote(DBUnitTestMixin):
 

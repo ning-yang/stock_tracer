@@ -4,6 +4,7 @@ from alembic import context
 from sqlalchemy import engine_from_config, pool, create_engine
 from sqlalchemy.exc import OperationalError
 from logging.config import fileConfig
+from stock_tracer.library import Configuration
 from stock_tracer.library.db import db_base_url, db_ut_url, db_prod_url
 from stock_tracer.model import Base
 
@@ -11,7 +12,7 @@ from stock_tracer.model import Base
 # access to the values within the .ini file in use.
 config = context.config
 
-is_unit_test = config.get_main_option("__unit_test__")
+is_unit_test = Configuration.getInstance().get("__unit_test__")
 db_url = db_ut_url if is_unit_test else db_prod_url
 config.set_main_option("sqlalchemy.url", db_url)
 
