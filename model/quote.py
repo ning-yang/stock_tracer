@@ -1,6 +1,6 @@
 from sqlalchemy import Column, Integer, Date, Float, ForeignKey
 from sqlalchemy.orm import relationship
-from stock_tracer.model.base import Base
+from base import Base
 
 class Quote(Base):
     __tablename__ = 'quotes'

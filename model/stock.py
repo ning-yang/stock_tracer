@@ -1,6 +1,6 @@
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String, UniqueConstraint
 from sqlalchemy.orm import relationship
-from stock_tracer.model.base import Base
+from base import Base
 
 class Stock(Base):
     __tablename__ = 'stocks'
@@ -8,6 +8,8 @@ class Stock(Base):
     id = Column(Integer, primary_key=True)
     exchange = Column(String)
     symbol = Column(String)
+
+    UniqueConstraint(exchange, symbol, name='stock_index')
 
     quotes = relationship("Quote", back_populates="stock")
 
