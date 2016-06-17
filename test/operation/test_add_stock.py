@@ -1,3 +1,4 @@
+import json
 from stock_tracer.library import transaction
 from stock_tracer.model import Stock
 from stock_tracer.operation import AddStockOperation
@@ -9,8 +10,10 @@ class TestAddStock(DBUnitTestMixin):
     def test_add_stock_succeed(self):
         """test_add_stock_succeed"""
         add_stock_op = AddStockOperation(exchange="NASDAQ", symbol="AAPL", logger=self.logger)
-        id = add_stock_op.run()
-        assert id == 1
+        result = add_stock_op.run()
+        json_result = json.loads(result)
+        assert json_result['stock_id'] == '1'
+        assert json_result['symbol'] == 'AAPL'
 
         with transaction() as tx:
             stock = tx.query(Stock).first()

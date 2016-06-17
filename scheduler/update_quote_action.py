@@ -15,5 +15,5 @@ class UpdateQuoteAction(ScheduledAction):
 
         self.logger.info("Update quotes for stocks:{0}".format(len(stocks)))
         for stock in stocks:
-            op = QueryQuoteOperation(stock_id=stock.id)
+            op = QueryQuoteOperation(stock_id=stock.stock_id)
             op.run()

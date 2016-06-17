@@ -23,4 +23,4 @@ class AddStockOperation(Base):
             self.logger.info("Adding stock {0}".format(stock))
             tx.add(stock)
             tx.flush()
-            self.reply = stock.id
+            self.reply = str(stock)

@@ -27,7 +27,7 @@ class QueryQuoteOperation(Base):
         """
         """execute"""
         with transaction(tx=self.tx) as tx:
-            stock = tx.query(Stock).filter(Stock.id == self.stock_id).first()
+            stock = tx.query(Stock).filter(Stock.stock_id == self.stock_id).first()
             if not stock:
                 raise Exception("stock with id {} is not found".format(self.stock_id))
 

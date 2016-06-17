@@ -6,9 +6,9 @@ from stock_tracer.library import ExportableMixin
 class Stock(Base, ExportableMixin):
     __tablename__ = 'stocks'
 
-    id = Column(Integer, primary_key=True)
-    exchange = Column(String)
-    symbol = Column(String)
+    stock_id = Column(Integer, primary_key=True)
+    exchange = Column(String(20))
+    symbol = Column(String(20))
 
     UniqueConstraint(exchange, symbol, name='stock_index')
 
