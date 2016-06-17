@@ -11,7 +11,7 @@ class TestQueryQuote(DBUnitTestMixin):
         with transaction() as tx:
             tx.add(Stock(exchange="NASDAQ", symbol="AAPL"))
 
-        query_quote_op = QueryQuoteOperation()
+        query_quote_op = QueryQuoteOperation(stock_id=1, logger=self.logger)
         query_quote_op.run()
 
         with transaction() as tx:
@@ -22,8 +22,9 @@ class TestQueryQuote(DBUnitTestMixin):
         with transaction() as tx:
             tx.add(Stock(exchange="NASDAQ", symbol="XXXXX"))
 
-        query_quote_op = QueryQuoteOperation()
-        query_quote_op.run()
+        query_quote_op = QueryQuoteOperation(stock_id=1, logger=self.logger)
+        error = query_quote_op.run()
+        assert "Bad Request" in error
 
         with transaction() as tx:
             quote = tx.query(Quote).first()

@@ -18,7 +18,7 @@ class TestWorker(DBUnitTestMixin):
 
         with transaction() as tx:
             tx.add(Stock(exchange="NASDAQ", symbol="AAPL"))
-            scheduled_action = UpdateQuoteAction(action_date=self.act_time, interval_in_second=3600)
+            scheduled_action = UpdateQuoteAction(action_date=self.act_time, interval_in_second=7200)
             tx.add(scheduled_action)
 
     def test_worker_run_scheduled_task(self):
@@ -30,4 +30,11 @@ class TestWorker(DBUnitTestMixin):
             quote = tx.query(Quote).first()
             action = tx.query(UpdateQuoteAction).first()
             assert quote
-            assert action.action_date == (self.act_time + timedelta(seconds=3600))
+            assert action.action_date == (self.act_time + timedelta(seconds=7200))
+
+        # run it again. Nothing changes
+        worker.execute_scheduled_task()
+
+        with transaction() as tx:
+            action = tx.query(UpdateQuoteAction).first()
+            assert action.action_date == (self.act_time + timedelta(seconds=7200))

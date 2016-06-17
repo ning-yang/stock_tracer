@@ -1,8 +1,9 @@
 from sqlalchemy import Column, Integer, Date, Float, ForeignKey
 from sqlalchemy.orm import relationship
 from base import Base
+from stock_tracer.library import ExportableMixin
 
-class Quote(Base):
+class Quote(Base, ExportableMixin):
     __tablename__ = 'quotes'
 
     id = Column(Integer, primary_key=True)

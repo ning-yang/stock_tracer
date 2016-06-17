@@ -20,4 +20,7 @@ class AddStockOperation(Base):
         """execute the operation"""
         with transaction() as tx:
             stock = Stock(exchange=self.exchange, symbol=self.symbol)
+            self.logger.info("Adding stock {0}".format(stock))
             tx.add(stock)
+            tx.flush()
+            self.reply = stock.id

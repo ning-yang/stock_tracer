@@ -5,7 +5,7 @@ from alembic.config import Config
 import stock_tracer
 from sqlalchemy import create_engine
 from sqlalchemy.exc import OperationalError
-from stock_tracer.library import Configuration
+from stock_tracer.library import Configuration, Logger
 from stock_tracer.library.db import db_base_url, db_name_ut
 
 class DBUnitTestMixin(object):
@@ -41,6 +41,8 @@ class DBUnitTestMixin(object):
             command.upgrade(alembic_config, "head")
         finally:
             chdir(cwd)
+
+        self.logger = Logger.get(self.__class__.__name__)
 
     def teardown_method(self, method):
         """teardown_method
