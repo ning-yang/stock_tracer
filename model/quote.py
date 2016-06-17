@@ -1,4 +1,5 @@
-from sqlalchemy import Column, Integer, Date, Float, ForeignKey
+from sqlalchemy import (Column, Integer, Date, Float,
+                        ForeignKey, UniqueConstraint)
 from sqlalchemy.orm import relationship
 from base import Base
 from stock_tracer.library import ExportableMixin
@@ -12,5 +13,7 @@ class Quote(Base, ExportableMixin):
     change_percentage = Column(Float, nullable=False)
     date = Column(Date, nullable=False)
     stock_id = Column(Integer, ForeignKey('stocks.id'))
+
+    UniqueConstraint(stock_id, date, name='unique_stock_date')
 
     stock = relationship("Stock", back_populates="quotes")

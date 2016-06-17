@@ -6,6 +6,7 @@ from sqlalchemy.exc import OperationalError
 from logging.config import fileConfig
 from stock_tracer.library import Configuration
 from stock_tracer.library.db import db_base_url, db_ut_url, db_prod_url
+import stock_tracer.scheduler
 from stock_tracer.model.base import Base
 
 # this is the Alembic Config object, which provides

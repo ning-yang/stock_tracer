@@ -40,16 +40,30 @@ class QueryQuoteOperation(Base):
                 price = quote_json['l']
                 change = quote_json['c']
                 change_percentage = quote_json['cp']
-                now = datetime.now()
 
-                quote = Quote(
-                    price=price,
-                    change=change,
-                    change_percentage=change_percentage,
-                    date=now.strftime("%Y-%m-%d"))
+                quote_date = datetime \
+                    .strptime(quote_json['lt_dts'], '%Y-%m-%dT%H:%M:%SZ')\
+                    .strftime("%Y-%m-%d")
 
-                self.logger.info("Add quote: {0}".format(quote))
-                stock.quotes.append(quote)
+                quote = tx.query(Quote) \
+                    .filter(Quote.stock_id == self.stock_id) \
+                    .filter(Quote.date == quote_date) \
+                    .first()
+
+                if quote:
+                    quote.price = price
+                    quote.change = change
+                    quote.change_percentage = change_percentage
+                    self.logger.info("Update quote: {0}".format(quote))
+                else:
+                    quote = Quote(
+                        price=price,
+                        change=change,
+                        change_percentage=change_percentage,
+                        date=quote_date)
+                    self.logger.info("Add quote: {0}".format(quote))
+                    stock.quotes.append(quote)
+
             except urllib2.HTTPError:
                 self.logger.error("invalid url {0}".format(url))
                 raise
