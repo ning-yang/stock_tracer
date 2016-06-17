@@ -1,11 +1,7 @@
-import urllib2
-import json
-from datetime import datetime, timedelta
+from datetime import timedelta
 from sqlalchemy import Column, Integer, DateTime, Boolean, String, func
 from stock_tracer.library import transaction, Logger, ExportableMixin, Error
-from base import Base
-from stock_tracer.model.stock import Stock
-from stock_tracer.model.quote import Quote
+from stock_tracer.model.base import Base
 
 class ScheduledAction(Base, ExportableMixin):
     __tablename__ = 'scheduled_actions'
@@ -59,37 +55,3 @@ class ScheduledAction(Base, ExportableMixin):
             tx.add(self)
             self.action_date += timedelta(seconds=self.interval_in_second)
             self.in_progress = False
-
-
-class UpdateQuoteAction(ScheduledAction):
-    __mapper_args__ = {
-        'polymorphic_identity': 'update_quote'
-    }
-
-    BASE_QUERY_URL = "http://finance.google.com/finance/info?client=ig&q={0}:{1}"
-
-    def execute(self, tx=None):
-        """execute"""
-        with transaction(tx=tx) as tx:
-            stocks = tx.query(Stock)
-            for stock in stocks:
-                url = self.BASE_QUERY_URL.format(stock.exchange, stock.symbol)
-                try:
-                    request = urllib2.urlopen(url)
-                    content = request.read()
-                    request.close()
-                    quote_json = json.loads(content[3:])[0]
-                    price = quote_json['l']
-                    change = quote_json['c']
-                    change_percentage = quote_json['cp']
-                    now = datetime.now()
-
-                    quote = Quote(
-                        price=price,
-                        change=change,
-                        change_percentage=change_percentage,
-                        date=now.strftime("%Y-%m-%d"))
-
-                    stock.quotes.append(quote)
-                except urllib2.HTTPError:
-                    self.logger.error("invalid url {0}".format(url))

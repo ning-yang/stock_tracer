@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 from stock_tracer.library import transaction
-from stock_tracer.model import UpdateQuoteAction, Stock, Quote, ScheduledAction
+from stock_tracer.model import Stock, Quote
+from stock_tracer.scheduler import UpdateQuoteAction, ScheduledAction
 from stock_tracer.test.db import DBUnitTestMixin
 
 class TestScheduledAction(DBUnitTestMixin):
