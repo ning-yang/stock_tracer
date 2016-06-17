@@ -45,4 +45,4 @@ class Logger(Singleton):
         logger.disabled = False
         return logger
 
-Logger = Logger.getInstance(Configuration.getInstance().get("log_folder"))
+Logger = Logger.getInstance(Configuration.get("log_folder"))

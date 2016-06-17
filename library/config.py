@@ -59,3 +59,5 @@ class Configuration(Singleton):
             config = yaml.load(yaml_file.read())
 
         return config if config else {}
+
+Configuration = Configuration.getInstance()

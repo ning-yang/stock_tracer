@@ -13,8 +13,7 @@ class DBUnitTestMixin(object):
     @classmethod
     def setup_class(cls):
         """setup_class"""
-        config = Configuration.getInstance()
-        config.set('__unit_test__', 'True')
+        Configuration.set('__unit_test__', 'True')
 
     @property
     def migration_root(self):

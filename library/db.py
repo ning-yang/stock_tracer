@@ -3,15 +3,13 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from stock_tracer.library import Configuration
 
+db_base_url = Configuration.get("db_base_url")
 
-config = Configuration.getInstance()
-db_base_url = config.get("db_base_url")
-
-db_name_ut = config.get("db_name_ut")
+db_name_ut = Configuration.get("db_name_ut")
 db_ut_url = db_base_url + "/" + db_name_ut
 engine_ut = create_engine(db_ut_url)
 
-db_name_prod = config.get("db_name_prod")
+db_name_prod = Configuration.get("db_name_prod")
 db_prod_url = db_base_url + "/" + db_name_prod
 engine_prod = create_engine(db_prod_url)
 
@@ -22,7 +20,7 @@ def transaction(tx=None):
     if tx:
         yield tx
     else:
-        is_unit_test = config.get("__unit_test__")
+        is_unit_test = Configuration.get("__unit_test__")
         engine = engine_ut if is_unit_test else engine_prod
         session = Session(bind=engine)
 

@@ -12,7 +12,7 @@ from stock_tracer.model.base import Base
 # access to the values within the .ini file in use.
 config = context.config
 
-is_unit_test = Configuration.getInstance().get("__unit_test__")
+is_unit_test = Configuration.get("__unit_test__")
 db_url = db_ut_url if is_unit_test else db_prod_url
 config.set_main_option("sqlalchemy.url", db_url)
 
