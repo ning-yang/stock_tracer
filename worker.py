@@ -1,13 +1,13 @@
 from time import sleep
 from datetime import datetime
-from stock_tracer.library import transaction, Logger
+from stock_tracer.library import transaction, Logger, Configuration
 from stock_tracer.scheduler import ScheduledAction
 
 class Worker(object):
     """Worker"""
-    def __init__(self, sleep_internal=600):
+    def __init__(self):
         self.on_line = True
-        self.sleep_internal = sleep_internal
+        self.sleep_internal = Configuration.get('sleep_internal', 600)
         self.logger = Logger.get(self.__class__.__name__)
 
     def run(self):

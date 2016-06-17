@@ -1,3 +1,5 @@
 db_base_url: mysql://root:password@mysql
 db_name_ut: ut_stock
 db_name_prod: stock
+
+sleep_internal: 600 

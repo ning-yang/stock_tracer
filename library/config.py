@@ -16,12 +16,12 @@ class Configuration(Singleton):
         for config in self.CONFIG_LIST:
             self.__configs.update(self.get_configuration(config))
 
-    def get(self, key):
+    def get(self, key, default=None):
         """get
 
         :param key:
         """
-        return self.__configs.get(key, None)
+        return self.__configs.get(key, default)
 
     def set(self, key, value):
         """set
