@@ -4,7 +4,7 @@ from os import path, makedirs
 from config import Configuration
 from singletonmixin import Singleton
 
-DEFAULT_LOGFOLDER = path.join(path.expanduser('~'), "log")
+DEFAULT_LOGFOLDER = path.join(path.expanduser('~'), "app", "log")
 
 class Logger(Singleton):
 
