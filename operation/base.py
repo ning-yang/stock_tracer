@@ -1,4 +1,4 @@
-from stock_tracer.library import Logger, Error
+from stock_tracer.common import Logger, Error
 
 class Base(object):
     """Base class for operation"""

@@ -5,8 +5,8 @@ from alembic.config import Config
 import stock_tracer
 from sqlalchemy import create_engine
 from sqlalchemy.exc import OperationalError
-from stock_tracer.library import Configuration, Logger
-from stock_tracer.library.db import db_base_url, db_name_ut
+from stock_tracer.common import Configuration, Logger
+from stock_tracer.common.db import db_base_url, db_name_ut
 
 class DBUnitTestMixin(object):
 

@@ -1,4 +1,4 @@
-from stock_tracer.library import transaction
+from stock_tracer.common import transaction
 from stock_tracer.model import Stock
 from stock_tracer.operation.base import Base
 

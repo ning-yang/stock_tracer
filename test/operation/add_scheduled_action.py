@@ -1,5 +1,5 @@
 import json
-from stock_tracer.library import transaction
+from stock_tracer.common import transaction
 from stock_tracer.scheduler import UpdateQuoteAction
 from stock_tracer.operation import AddScheduledAction
 from stock_tracer.test.db import DBUnitTestMixin

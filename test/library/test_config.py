@@ -1,4 +1,4 @@
-from stock_tracer.library import Configuration
+from stock_tracer.common import Configuration
 
 class TestConfig(object):
 

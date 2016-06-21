@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, String, UniqueConstraint
 from sqlalchemy.orm import relationship
 from base import Base
-from stock_tracer.library import ExportableMixin
+from stock_tracer.common import ExportableMixin
 
 class Stock(Base, ExportableMixin):
     __tablename__ = 'stocks'

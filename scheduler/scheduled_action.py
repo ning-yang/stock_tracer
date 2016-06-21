@@ -1,6 +1,6 @@
 from datetime import timedelta
 from sqlalchemy import Column, Integer, DateTime, Boolean, String, func
-from stock_tracer.library import transaction, Logger, ExportableMixin, Error
+from stock_tracer.common import transaction, Logger, ExportableMixin, Error
 from stock_tracer.model.base import Base
 
 class ScheduledAction(Base, ExportableMixin):

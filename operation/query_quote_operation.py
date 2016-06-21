@@ -1,7 +1,7 @@
 import json
 import urllib2
 from datetime import datetime
-from stock_tracer.library import transaction
+from stock_tracer.common import transaction
 from stock_tracer.model import Stock, Quote
 from stock_tracer.operation.base import Base
 

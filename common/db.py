@@ -1,7 +1,7 @@
 from contextlib import contextmanager
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from stock_tracer.library import Configuration
+from stock_tracer.common import Configuration
 
 db_base_url = Configuration.get("db_base_url")
 

@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 from stock_tracer.worker import Worker
-from stock_tracer.library import transaction
+from stock_tracer.common import transaction
 from stock_tracer.model import Stock, Quote
 from stock_tracer.scheduler import UpdateQuoteAction
 from stock_tracer.test.db import DBUnitTestMixin

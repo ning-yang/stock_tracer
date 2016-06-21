@@ -1,7 +1,7 @@
 import yaml
 import inspect
 from os import path
-from stock_tracer.library.singletonmixin import Singleton
+from stock_tracer.common.singletonmixin import Singleton
 
 CONFIG_DIRECTORY = "config"
 

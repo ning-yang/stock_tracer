@@ -1,6 +1,6 @@
 from time import sleep
 from datetime import datetime
-from stock_tracer.library import transaction, Logger, Configuration
+from stock_tracer.common import transaction, Logger, Configuration
 from stock_tracer.scheduler import ScheduledAction
 
 class Worker(object):

@@ -1,4 +1,4 @@
-from stock_tracer.library import transaction
+from stock_tracer.common import transaction
 from stock_tracer.model import Stock, Quote
 from stock_tracer.operation import QueryQuoteOperation
 from stock_tracer.test.db import DBUnitTestMixin
