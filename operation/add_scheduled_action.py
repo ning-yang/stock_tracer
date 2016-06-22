@@ -1,8 +1,10 @@
 from datetime import datetime
-from stock_tracer.common import transaction
+from stock_tracer import StockTracerService
+from stock_tracer.common import transaction, API
 from stock_tracer.scheduler import ScheduledAction
 from stock_tracer.operation.base import Base
 
+@API(StockTracerService, "add_scheduled_action")
 class AddScheduledAction(Base):
 
     def __init__(self, action_type, interval_in_second, *args, **kwargs):

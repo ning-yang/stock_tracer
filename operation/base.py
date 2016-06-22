@@ -22,3 +22,12 @@ class Base(object):
     def execute(self):
         """execute method, need to be overridden by derived class"""
         raise Exception("Must be overridden by derived class'")
+
+    @classmethod
+    def get_instance(cls, *args, **kwargs):
+        """get_instance
+
+        :param *args:
+        :param **kwargs:
+        """
+        return cls(*args, **kwargs)

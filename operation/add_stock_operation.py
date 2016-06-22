@@ -1,7 +1,9 @@
-from stock_tracer.common import transaction
+from stock_tracer import StockTracerService
+from stock_tracer.common import transaction, API
 from stock_tracer.model import Stock
 from stock_tracer.operation.base import Base
 
+@API(StockTracerService, "add_stock")
 class AddStockOperation(Base):
     """AddStockOperation"""
     def __init__(self, exchange, symbol, *args, **kwargs):

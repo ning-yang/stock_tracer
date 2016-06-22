@@ -3,3 +3,6 @@ db_name_ut: ut_stock
 db_name_prod: stock
 
 sleep_internal: 600 
+
+mq_server: rabbit
+mq_name: "stock_tracer"
