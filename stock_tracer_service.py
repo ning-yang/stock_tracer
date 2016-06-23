@@ -39,16 +39,16 @@ class StockTracerService(MQService, APIService):
         self.logger.info("Receive request:{0}".format(body))
 
         try:
-            self.dispatch_request(body)
+            response = self.dispatch_request(body)
         except:
             exc_type, exc_obj, exc_tb = sys.exc_info()
             response = {'error': {'type': exc_type.__name__, 'msg': exc_obj.message}}
             self.logger.error("Operation execution failed with {}".format(Error.Dump()))
 
-        self.mq_channel.basic_publish(exchnage='',
+        self.mq_channel.basic_publish(exchange='',
                                       routing_key=props.reply_to,
                                       properties=pika.BasicProperties(correlation_id=props.correlation_id),
-                                      body=response)
+                                      body=str(response))
         self.mq_channel.basic_ack(delivery_tag=method.delivery_tag)
 
     def dispatch_request(self, request_body):

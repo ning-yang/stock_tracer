@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% block body %}
+    <form action="{{ url_for('add_stock') }}" method="post" class="add-entry">
+        <dl>
+            <dt>Exchange:
+            <dd><input type="text" size="30" name="exchange">
+            <dt>Symbol:
+            <dd><input type="text" size="30" name="symbol">
+            <dd><input type="submit" value="Add">
+        </dl>
+    </form>
+{% endblock %}
