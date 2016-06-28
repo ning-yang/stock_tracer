@@ -1,3 +1,4 @@
 from query_quote_operation import QueryQuoteOperation
 from add_stock_operation import AddStockOperation
 from add_scheduled_action import AddScheduledAction
+from list_quotes_operation import ListQuotesOperation
