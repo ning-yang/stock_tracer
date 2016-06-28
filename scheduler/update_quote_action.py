@@ -1,7 +1,7 @@
-from scheduled_action import ScheduledAction
 from stock_tracer.common import transaction
 from stock_tracer.model.stock import Stock
 from stock_tracer.operation import QueryQuoteOperation
+from stock_tracer.scheduler import ScheduledAction
 
 class UpdateQuoteAction(ScheduledAction):
     __mapper_args__ = {
