@@ -28,10 +28,13 @@
                 {% for stock_row in stock_rows|sort(attribute='symbol') %}
                 <tr>
                     <td>{{ stock_row.symbol }}</td>
-                    {% for quote in stock_row.quotes  %}
-                    {% set td_class="success" if quote > 0 else "danger" %}
-                    {% set td_class="warning" if quote == 0 else td_class %}
-                    <td class="{{ td_class }}">{{ quote }}%</td>
+                    {% for cp in stock_row.change_percentages%}
+                    {% if cp == 0 %}
+                    <td class="warning text-center">N/A</td>
+                    {% else %}
+                    {% set td_class="success" if cp > 0 else "danger" %}
+                    <td class="{{ td_class }} text-center">{{ cp }}%</td>
+                    {% endif %}
                     {% endfor %}
                 </tr>
                 {% endfor %}

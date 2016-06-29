@@ -29,10 +29,10 @@ def home():
         stock_row_item = {'id': key}
         stock_row_item['exchange'] = stock_quote['exchange']
         stock_row_item['symbol'] = stock_quote['symbol']
-        stock_row_item['quotes'] = [0] * len(date_header)
+        stock_row_item['change_percentages'] = [0] * len(date_header)
         for quote in stock_quote['quotes']:
             index = date_header.index(quote['date'])
-            stock_row_item['quotes'][index] = quote['change_percentage']
+            stock_row_item['change_percentages'][index] = quote['change_percentage']
 
         stock_rows.append(stock_row_item)
 
