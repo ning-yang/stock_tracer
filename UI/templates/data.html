@@ -1,12 +1,43 @@
 {% extends "layout.html" %}
 {% block body %}
+<div class="row">
     <form action="{{ url_for('add_stock') }}" method="post" class="add-entry">
-        <dl>
-            <dt>Exchange:
-            <dd><input type="text" size="30" name="exchange">
-            <dt>Symbol:
-            <dd><input type="text" size="30" name="symbol">
-            <dd><input type="submit" value="Add">
-        </dl>
+        <div class="form-group">
+            <label for="exchangeInput">Exchange</label>
+            <input type="text" size="30" name="exchange" id="exchangeInput" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="symbolInput">Symbol</label>
+            <input type="text" size="30" name="symbol" id="symbolInput" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-default">Add</button>
     </form>
+    <ul>
+</div>
+    <div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Stock</th>
+                    {% for date in date_header%}
+                    <th>{{ date }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for stock_row in stock_rows %}
+                <tr>
+                    <td>{{ stock_row.name }}</td>
+                    {% for quote in stock_row.quotes  %}
+                    {% set td_class="success" if quote > 0 else "danger" %}
+                    {% set td_class="warning" if quote == 0 else td_class %}
+                    <td class="{{ td_class }}">{{ quote }}%</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock %}
+
+

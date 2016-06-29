@@ -1,20 +1,49 @@
+import json
 from flask import Flask, render_template, request
-import uuid
-import pika
 from stock_tracer.common import MQClient
 
 app = Flask(__name__)
 
 @app.route("/")
-def hello():
-    return render_template('data.html')
+def home():
+    request_body = {}
+    request_body['action'] = 'list_quotes'
+    request_body['payload'] = {}
+    client = MQClient()
+    reply = client.call(request_body)
+
+    if 'error' in reply:
+        return "error!{}".format(str(reply))
+
+    stock_quotes = json.loads(reply)
+    date_header = []
+    for stock_quote in stock_quotes.itervalues():
+        for quote in stock_quote['quotes']:
+            if quote['date'] not in date_header:
+                date_header.append(quote['date'])
+
+    date_header.sort()
+
+    stock_rows = []
+    for key, stock_quote in stock_quotes.iteritems():
+        stock_row_item = {'id': key}
+        name = "{0}:{1}".format(stock_quote['exchange'], stock_quote['symbol'])
+        stock_row_item['name'] = name
+        stock_row_item['quotes'] = [0] * len(date_header)
+        for quote in stock_quote['quotes']:
+            index = date_header.index(quote['date'])
+            stock_row_item['quotes'][index] = quote['change_percentage']
+
+        stock_rows.append(stock_row_item)
+
+    return render_template('data.html', date_header=date_header, stock_rows=stock_rows)
 
 @app.route('/add', methods=['POST'])
 def add_stock():
     app.logger.info(request.form['exchange'])
     app.logger.info(request.form['symbol'])
     client = MQClient()
-    request_body= {}
+    request_body = {}
     request_body['action'] = 'add_stock'
     request_body['payload'] = {}
     request_body['payload']['exchange'] = request.form['exchange']
