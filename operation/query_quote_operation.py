@@ -41,6 +41,10 @@ class QueryQuoteOperation(Base):
                 change = quote_json['c']
                 change_percentage = quote_json['cp']
 
+                if change == 0:
+                    self.logger.warning('Hit response with invalid date:{}'.format(content))
+                    return
+
                 quote_date = datetime \
                     .strptime(quote_json['lt_dts'], '%Y-%m-%dT%H:%M:%SZ')\
                     .strftime("%Y-%m-%d")

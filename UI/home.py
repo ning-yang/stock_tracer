@@ -27,8 +27,8 @@ def home():
     stock_rows = []
     for key, stock_quote in stock_quotes.iteritems():
         stock_row_item = {'id': key}
-        name = "{0}:{1}".format(stock_quote['exchange'], stock_quote['symbol'])
-        stock_row_item['name'] = name
+        stock_row_item['exchange'] = stock_quote['exchange']
+        stock_row_item['symbol'] = stock_quote['symbol']
         stock_row_item['quotes'] = [0] * len(date_header)
         for quote in stock_quote['quotes']:
             index = date_header.index(quote['date'])
