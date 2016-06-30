@@ -11,7 +11,7 @@ Personal Project to track history data for stocks. Including:
 - python with sqlalchemy and flask
 
 ## Demo
-stock.ningy.me
+[link](http://stock.ningy.me)
 
 ### Copyright and license
 
