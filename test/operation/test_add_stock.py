@@ -1,4 +1,5 @@
 import json
+import pytest
 from stock_tracer.common import transaction
 from stock_tracer.model import Stock
 from stock_tracer.operation import AddStockOperation
@@ -27,5 +28,7 @@ class TestAddStock(DBUnitTestMixin):
 
         add_stock_op = AddStockOperation(exchange="NASDAQ", symbol="AAPL", logger=self.logger)
 
-        reply = add_stock_op.run()
-        assert "Duplicate" in reply
+        with pytest.raises(Exception) as exc_info:
+            add_stock_op.run()
+
+        assert "Duplicate" in exc_info.value.message

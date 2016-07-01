@@ -41,7 +41,7 @@ class QueryQuoteOperation(Base):
                 change = quote_json['c']
                 change_percentage = quote_json['cp']
 
-                if not change or change == 0:
+                if not change or float(change) == 0:
                     self.logger.warning('Hit response with invalid date:{}'.format(content))
                     return
 

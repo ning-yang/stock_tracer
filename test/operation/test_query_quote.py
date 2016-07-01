@@ -1,3 +1,4 @@
+import pytest
 from stock_tracer.common import transaction
 from stock_tracer.model import Stock, Quote
 from stock_tracer.operation import QueryQuoteOperation
@@ -30,8 +31,8 @@ class TestQueryQuote(DBUnitTestMixin):
             tx.add(Stock(exchange="NASDAQ", symbol="XXXXX"))
 
         query_quote_op = QueryQuoteOperation(stock_id=1, logger=self.logger)
-        error = query_quote_op.run()
-        assert "Bad Request" in error
+        with pytest.raises(Exception):
+            query_quote_op.run()
 
         with transaction() as tx:
             quote = tx.query(Quote).first()
