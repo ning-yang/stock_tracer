@@ -13,9 +13,9 @@ class Base(object):
             self.logger.info("Operation run starts.")
             self.execute()
             self.logger.info("Operation run finishes.")
-        except Exception as e:
+        except Exception:
             self.logger.error("Operation failed with {0}".format(Error.Dump()))
-            return str(e)
+            raise
 
         return self.reply
 
