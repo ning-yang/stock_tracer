@@ -1,6 +1,6 @@
 from contextlib import contextmanager
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import sessionmaker, scoped_session
 from stock_tracer.common import Configuration
 
 db_base_url = Configuration.get("db_base_url")
@@ -13,7 +13,7 @@ db_name_prod = Configuration.get("db_name_prod")
 db_prod_url = db_base_url + "/" + db_name_prod
 engine_prod = create_engine(db_prod_url)
 
-Session = sessionmaker(expire_on_commit=False)
+Session = scoped_session(sessionmaker(expire_on_commit=False))
 
 @contextmanager
 def transaction(tx=None):
@@ -32,3 +32,4 @@ def transaction(tx=None):
             raise
         finally:
             session.close()
+            Session.remove()
