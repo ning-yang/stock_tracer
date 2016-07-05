@@ -1,11 +1,10 @@
 import datetime
-import json
 from stock_tracer.common import transaction
 from stock_tracer.model import Stock, Quote
 from stock_tracer.operation import ListQuotesOperation
-from stock_tracer.test.db import DBUnitTestMixin
+from stock_tracer.test.base import DBUnitTest
 
-class TestListQuotesOperation(DBUnitTestMixin):
+class TestListQuotesOperation(DBUnitTest):
     """TestListQuotesOperation"""
 
     def setup_method(self, method):

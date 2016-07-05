@@ -7,37 +7,53 @@ from singletonmixin import Singleton
 DEFAULT_LOGFOLDER = path.join(path.expanduser('~'), "app", "log")
 
 class Logger(Singleton):
+    """Logger"""
 
-    def __init__(self, log_folder=None, file_name="stock_tracer_{0}.log"):
+    def __init__(self):
+        """__init__"""
+        self.is_initialized = False
+
+    def setup(self, log_folder=None, file_name="stock_tracer_{0}.log"):
+        """setup
+
+        :param log_folder:
+        :param file_name:
+        """
+        log_config = Configuration.get("logging")
+
         logger = logging.getLogger('stock_tracer')
         logger.setLevel(logging.DEBUG)
+        formatter = logging.Formatter('[%(asctime)s] - [%(name)s] - [%(levelname)s] - %(message)s')
 
         # create file log
-        log_folder = log_folder if log_folder else DEFAULT_LOGFOLDER
-        if not path.exists(log_folder):
-            makedirs(log_folder)
+        if log_config["file"]:
+            log_folder = log_folder if log_folder else DEFAULT_LOGFOLDER
+            if not path.exists(log_folder):
+                makedirs(log_folder)
 
-        log_file_name = file_name.format(datetime.now().strftime("%Y-%m-%d"))
-        fh = logging.FileHandler(path.join(log_folder, log_file_name))
-        fh.setLevel(logging.DEBUG)
+            log_file_name = file_name.format(datetime.now().strftime("%Y-%m-%d"))
+            fh = logging.FileHandler(path.join(log_folder, log_file_name))
+            fh.setLevel(logging.DEBUG)
+            fh.setFormatter(formatter)
+            logger.addHandler(fh)
 
         # create console log
-        ch = logging.StreamHandler()
-        ch.setLevel(logging.DEBUG)
+        if log_config["console"]:
+            ch = logging.StreamHandler()
+            ch.setLevel(logging.DEBUG)
+            ch.setFormatter(formatter)
+            logger.addHandler(ch)
 
-        # create formatter and add it to the handlers
-        formatter = logging.Formatter('[%(asctime)s] - [%(name)s] - [%(levelname)s] - %(message)s')
-        fh.setFormatter(formatter)
-        ch.setFormatter(formatter)
-        # add the handlers to the logger
-        logger.addHandler(fh)
-        logger.addHandler(ch)
+        self.is_initialized = True
 
     def get(self, logger_name):
         """get logging instance
 
         :param logger_name:
         """
+        if not self.is_initialized:
+            self.setup(Configuration.get("log_folder"))
+
         if "stock_tracer" not in logger_name:
             logger_name = "stock_tracer." + logger_name
 
@@ -45,4 +61,4 @@ class Logger(Singleton):
         logger.disabled = False
         return logger
 
-Logger = Logger.getInstance(Configuration.get("log_folder"))
+Logger = Logger.getInstance()

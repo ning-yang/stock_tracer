@@ -1,9 +1,9 @@
 from stock_tracer import StockTracerService
 from stock_tracer.common import transaction
 from stock_tracer.model import Stock
-from stock_tracer.test.db import DBUnitTestMixin
+from stock_tracer.test.base import DBUnitTest
 
-class TestStockTracerService(DBUnitTestMixin):
+class TestStockTracerService(DBUnitTest):
 
     def test_service_run(self):
         """test_service_run"""
@@ -15,4 +15,3 @@ class TestStockTracerService(DBUnitTestMixin):
             stock = tx.query(Stock).first()
             assert stock.symbol == "AAPL"
             assert stock.exchange == "NASDAQ"
-

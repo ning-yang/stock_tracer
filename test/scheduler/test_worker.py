@@ -2,9 +2,9 @@ from datetime import datetime, timedelta
 from stock_tracer.common import transaction
 from stock_tracer.model import Stock, Quote
 from stock_tracer.scheduler import UpdateQuoteAction, Worker
-from stock_tracer.test.db import DBUnitTestMixin
+from stock_tracer.test.base import DBUnitTest
 
-class TestWorker(DBUnitTestMixin):
+class TestWorker(DBUnitTest):
 
     def setup_method(self, method):
         """setup_method

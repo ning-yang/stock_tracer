@@ -3,9 +3,9 @@ import pytest
 from stock_tracer.common import transaction
 from stock_tracer.model import Stock
 from stock_tracer.operation import AddStockOperation
-from stock_tracer.test.db import DBUnitTestMixin
+from stock_tracer.test.base import DBUnitTest
 
-class TestAddStock(DBUnitTestMixin):
+class TestAddStock(DBUnitTest):
     """Test AddStock opeartion"""
 
     def test_add_stock_succeed(self):

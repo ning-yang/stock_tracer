@@ -1,8 +1,8 @@
 from stock_tracer.common import transaction
 from stock_tracer.model import Stock
-from stock_tracer.test.db import DBUnitTestMixin
+from stock_tracer.test.base import DBUnitTest
 
-class TestStock(DBUnitTestMixin):
+class TestStock(DBUnitTest):
 
     def test_create_stock(self):
         """test_create_stock"""

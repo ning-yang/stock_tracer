@@ -8,12 +8,19 @@ from sqlalchemy.exc import OperationalError
 from stock_tracer.common import Configuration, Logger
 from stock_tracer.common.db import db_base_url, db_name_ut
 
-class DBUnitTestMixin(object):
+class UnitTest(object):
+    """UnitTest"""
 
     @classmethod
     def setup_class(cls):
         """setup_class"""
         Configuration.set('__unit_test__', 'True')
+        logging_config = Configuration.get('logging')
+        logging_config['file'] = False
+        logging_config['es'] = False
+
+class DBUnitTest(UnitTest):
+    """DBUnitTestMixin"""
 
     @property
     def migration_root(self):

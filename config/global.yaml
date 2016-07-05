@@ -6,3 +6,8 @@ sleep_internal: 600
 
 mq_server: rabbit
 mq_name: "stock_tracer"
+
+logging:
+  file: true
+  console: true
+  es: true

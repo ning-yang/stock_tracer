@@ -1,8 +1,8 @@
 from stock_tracer.common import transaction
 from stock_tracer.model import Stock, Quote
-from stock_tracer.test.db import DBUnitTestMixin
+from stock_tracer.test.base import DBUnitTest
 
-class TestQuote(DBUnitTestMixin):
+class TestQuote(DBUnitTest):
 
     def test_create_quote(self):
         """test_create_quote"""
