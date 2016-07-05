@@ -3,6 +3,7 @@ from datetime import datetime
 from os import path, makedirs
 from config import Configuration
 from singletonmixin import Singleton
+from es_logging_handler import ESLoggingHandler
 
 DEFAULT_LOGFOLDER = path.join(path.expanduser('~'), "app", "log")
 
@@ -43,6 +44,14 @@ class Logger(Singleton):
             ch.setLevel(logging.DEBUG)
             ch.setFormatter(formatter)
             logger.addHandler(ch)
+
+        # create es log
+        if log_config["es"]:
+            es_logging_handler = ESLoggingHandler([{'host': Configuration.get('es_host'), 'port': 9200}],
+                                                  es_index_name="stock_log")
+            es_logging_handler.setLevel(logging.DEBUG)
+            es_logging_handler.setFormatter(formatter)
+            logger.addHandler(es_logging_handler)
 
         self.is_initialized = True
 

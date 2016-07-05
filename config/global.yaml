@@ -7,6 +7,8 @@ sleep_internal: 600
 mq_server: rabbit
 mq_name: "stock_tracer"
 
+es_host: elastic-host 
+
 logging:
   file: true
   console: true

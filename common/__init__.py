@@ -6,3 +6,4 @@ from error import Error
 from mq_service import MQService
 from mq_client import MQClient
 from api_service import APIService, API
+from es_logging_handler import ESLoggingHandler
