@@ -1,4 +1,6 @@
 # stock_tracer
+[![Build Status](https://travis-ci.org/ning-yang/stock_tracer.svg?branch=master)](https://travis-ci.org/ning-yang/stock_tracer)
+
 Personal Project to track history data for stocks. Including:
 - Frontend UI: dislapy quotes table and allow adding new stocks
 - Backed Service: serving UI api query
@@ -7,6 +9,8 @@ Personal Project to track history data for stocks. Including:
 ## Stacks
 - mysql
 - rabbitmq
+- elastic_search
+- kibana
 - dockers
 - python with sqlalchemy and flask
 
