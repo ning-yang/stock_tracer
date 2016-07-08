@@ -18,3 +18,10 @@ before_script:
 
 script:
   - docker exec -t worker py.test -v 
+
+after_success:
+  - if [ "$TRAVIS_BRANCH" == "master" ]; then
+    docker tag stock_tracer ningy/stock_tracer:$TRAVIS_COMMIT;
+    docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
+    docker push ningy/stock_tracer:$TRAVIS_COMMIT;
+    fi
