@@ -6,13 +6,14 @@ services:
   - docker
 
 install:
-  - docker run --name mysql-db -v ~/app/mysql:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=password -d mysql:5.7
+  - docker search mysql
+  - docker run --name mysql-db -e MYSQL_ROOT_PASSWORD=password -d mysql:5.7
   - docker run --name mq-stock --hostname mq-host -d rabbitmq:3
   - docker run --name elastic -d elasticsearch
 
 before_script:
   - docker build -t stock_tracer docker
-  - docker run -d --link mysql-db:mysql --link mq-stock:rabbit --link elastic:elastic-host -v ~/app:/root/app --name worker stock_tracer worker
+  - docker run -d --link mysql-db:mysql --link mq-stock:rabbit --link elastic:elastic-host --name worker stock_tracer worker
   - docker ps
   - docker logs worker
 
