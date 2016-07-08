@@ -6,7 +6,6 @@ services:
   - docker
 
 install:
-  - docker search mysql
   - docker run --name mysql-db -e MYSQL_ROOT_PASSWORD=password -d mysql:5.7
   - docker run --name mq-stock --hostname mq-host -d rabbitmq:3
   - docker run --name elastic -d elasticsearch
