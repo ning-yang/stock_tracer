@@ -12,12 +12,9 @@ install:
 
 before_script:
   - docker build -t stock_tracer docker
-  - docker run -d --link mysql-db:mysql --link mq-stock:rabbit --link elastic:elastic-host --name worker stock_tracer worker
-  - docker ps
-  - docker logs worker
 
 script:
-  - docker exec -t worker py.test -v 
+  - docker run -t --name ut --link mysql-db:mysql --link mq-stock:rabbit --link elastic:elastic-host stock_tracer test
 
 after_success:
   - if [ "$TRAVIS_BRANCH" == "master" ]; then

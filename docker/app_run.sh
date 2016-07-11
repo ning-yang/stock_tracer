@@ -19,15 +19,29 @@ start_ui()
     flask run --host 0.0.0.0
 }
 
-if [ $1 = "ui" ]; then
-    start_ui
-else
-    echo 'update db...'
-    alembic upgrade head
+start_test()
+{
+    echo 'start running py.test'
+    py.test -v
+}
 
-    if [ $1 = 'service' ]; then
-        start_service
-    else 
-        start_worker
-    fi
-fi
+case "$1" in
+"ui")
+    start_ui
+    ;;
+"service")
+    alembic upgrade head
+    start_service
+    ;;
+"worker")
+    alembic upgrade head
+    start_worker
+    ;;
+"test")
+    start_test
+    ;;
+*)
+    echo 'error command'
+    exit 1
+    ;;
+esac
