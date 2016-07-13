@@ -27,7 +27,7 @@
             <tbody>
                 {% for stock_row in stock_rows|sort(attribute='symbol') %}
                 <tr>
-                    <td>{{ stock_row.symbol }}</td>
+                    <td><a href="/stock/{{ stock_row.id }}">{{ stock_row.symbol }}</a></td>
                     {% for cp in stock_row.change_percentages%}
                     {% if cp == 0 %}
                     <td class="warning text-center">N/A</td>
@@ -42,5 +42,3 @@
         </table>
     </div>
 {% endblock %}
-
-

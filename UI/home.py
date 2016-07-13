@@ -53,5 +53,24 @@ def add_stock():
 
     return responce
 
+@app.route('/stock/<stock_id>')
+def stock_detail(stock_id):
+    app.logger.info("building view for {}".format(stock_id))
+
+    request_body = {}
+    request_body['action'] = 'list_quotes'
+    request_body['payload'] = {'days': 100}
+    request_body['payload']['stock_id'] = stock_id
+
+    client = MQClient()
+    reply = client.call(request_body)
+
+    if 'error' in reply:
+        return "error!{}".format(str(reply))
+
+    stock_detail = json.loads(reply)
+
+    return render_template('stock_detail.html', stock=stock_detail[stock_id])
+
 if __name__ == "__main__":
     app.run()

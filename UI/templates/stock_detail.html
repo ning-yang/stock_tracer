@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+{% block body %}
+<div class="container">
+    <div class="row">
+        <table class='table' style="width: auto;">
+            <tr>
+                <td>Exchange:</td>
+                <td>{{ stock.exchange }}</td>
+            </tr>
+            <tr>
+                <td>Symbol:</td>
+                <td>{{ stock.symbol }}</td>
+            </tr>
+        </table>
+    </div>
+    <div class="row">
+        <table class="table table-condensed" style="width: 500px">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th class="text-center">Change Percentage</th>
+                    <th>Price</th>
+            </thead>
+            <tbody>
+                {% for quote in stock.quotes  %}
+                {% set cp = quote.change_percentage %}
+                {% if cp == 0 %}
+                {% set td_class="warning" %}
+                {% else %}
+                {% set td_class="success" if cp > 0 else "danger" %}
+                {% endif %}
+                <tr>
+                    <td> {{ quote.date }}</td>
+                    <td class="{{ td_class }} text-center"> {{ quote.change_percentage }}% </td>
+                    <td> {{ quote.price }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
