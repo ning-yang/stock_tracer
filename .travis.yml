@@ -19,6 +19,8 @@ script:
 after_success:
   - if [ "$TRAVIS_BRANCH" == "master" ]; then
     docker tag stock_tracer ningy/stock_tracer:$TRAVIS_COMMIT;
+    docker tag stock_tracer ningy/stock_tracer:latest;
     docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
     docker push ningy/stock_tracer:$TRAVIS_COMMIT;
+    docker push ningy/stock_tracer:latest;
     fi
