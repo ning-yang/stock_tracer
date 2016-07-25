@@ -8,7 +8,7 @@ app = Flask(__name__)
 def home():
     request_body = {}
     request_body['action'] = 'list_quotes'
-    request_body['payload'] = {'days': 15}
+    request_body['payload'] = {'days': 20}
     client = MQClient()
     reply = client.call(request_body)
 
