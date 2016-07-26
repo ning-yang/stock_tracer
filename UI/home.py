@@ -1,5 +1,5 @@
 import json
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 from stock_tracer.common import MQClient
 
 app = Flask(__name__)
@@ -71,6 +71,15 @@ def stock_detail(stock_id):
     stock_detail = json.loads(reply)
 
     return render_template('stock_detail.html', stock=stock_detail[stock_id])
+
+@app.route('/refresh_quotes', methods=['post'])
+def refresh_quotes():
+    client = MQClient()
+    reply = client.call({'action': 'refresh_quotes'})
+    if 'error' in reply:
+        return reply
+
+    return redirect(url_for('home'))
 
 if __name__ == "__main__":
     app.run()

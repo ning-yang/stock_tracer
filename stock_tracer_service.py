@@ -59,7 +59,7 @@ class StockTracerService(MQService, APIService):
         """
         message = json.loads(request_body)
         action = message['action']
-        payload = message['payload']
+        payload = message.get('payload', {})
 
         return self.operations[action].get_instance(**payload).run()
 

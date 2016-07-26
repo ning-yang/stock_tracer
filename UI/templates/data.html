@@ -1,6 +1,38 @@
 {% extends "layout.html" %}
 {% block body %}
 <div class="row">
+    <form action="{{ url_for('refresh_quotes') }}" method="post">
+        <button type="submit" class="btn btn-info"><i class="fa fa-refresh" aria-hidden="true"></i> Refresh</button>
+    </form>
+</div>
+<div class="row">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Stock</th>
+                {% for date in date_header%}
+                <th>{{ date }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for stock_row in stock_rows|sort(attribute='symbol') %}
+            <tr>
+                <td><a href="/stock/{{ stock_row.id }}">{{ stock_row.symbol }}</a></td>
+                {% for cp in stock_row.change_percentages%}
+                {% if cp == 0 %}
+                <td class="warning text-center">N/A</td>
+                {% else %}
+                {% set td_class="success" if cp > 0 else "danger" %}
+                <td class="{{ td_class }} text-center">{{ cp }}%</td>
+                {% endif %}
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<div class="row">
     <form action="{{ url_for('add_stock') }}" method="post" class="add-entry">
         <div class="form-group">
             <label for="exchangeInput">Exchange</label>
@@ -12,33 +44,5 @@
         </div>
         <button type="submit" class="btn btn-default">Add</button>
     </form>
-    <ul>
 </div>
-    <div>
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th>Stock</th>
-                    {% for date in date_header%}
-                    <th>{{ date }}</th>
-                    {% endfor %}
-                </tr>
-            </thead>
-            <tbody>
-                {% for stock_row in stock_rows|sort(attribute='symbol') %}
-                <tr>
-                    <td><a href="/stock/{{ stock_row.id }}">{{ stock_row.symbol }}</a></td>
-                    {% for cp in stock_row.change_percentages%}
-                    {% if cp == 0 %}
-                    <td class="warning text-center">N/A</td>
-                    {% else %}
-                    {% set td_class="success" if cp > 0 else "danger" %}
-                    <td class="{{ td_class }} text-center">{{ cp }}%</td>
-                    {% endif %}
-                    {% endfor %}
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
 {% endblock %}
