@@ -49,7 +49,7 @@ class ScheduledAction(Base, ExportableMixin):
             self.in_progress = True
 
     def complete(self):
-        """mark_in_process"""
+        """complete_operation"""
         self.logger.info("Finish executing:{0}".format(self))
         with transaction() as tx:
             tx.add(self)
