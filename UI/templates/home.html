@@ -1,9 +1,24 @@
 {% extends "layout.html" %}
 {% block body %}
 <div class="row">
-    <form action="{{ url_for('refresh_quotes') }}" method="post">
-        <button type="submit" class="btn btn-info"><i class="fa fa-refresh" aria-hidden="true"></i> Refresh</button>
-    </form>
+    <div class="col-md-4">
+        <form action="{{ url_for('refresh_quotes') }}" method="post">
+            <button type="submit" class="btn btn-info"><i class="fa fa-refresh" aria-hidden="true"></i> Refresh</button>
+        </form>
+    </div>
+    <div class="col-md-8">
+        <form class="form-inline" action="{{ url_for('add_stock') }}" method="post">
+            <div class="form-group">
+                <label class="sr-only" for="exchangeInput">Exchange</label>
+                <input type="text" size="30" name="exchange" id="exchangeInput" placeholder="Exchange" class="form-control">
+            </div>
+            <div class="form-group">
+                <label class="sr-only" for="symbolInput">Symbol</label>
+                <input type="text" size="30" name="symbol" id="symbolInput" placeholder="Symbol" class="form-control">
+            </div>
+            <button type="submit" class="btn btn-success">Add New Stock</button>
+        </form>
+    </div>
 </div>
 <div class="row">
     <table class="table table-hover">
@@ -31,18 +46,5 @@
             {% endfor %}
         </tbody>
     </table>
-</div>
-<div class="row">
-    <form action="{{ url_for('add_stock') }}" method="post" class="add-entry">
-        <div class="form-group">
-            <label for="exchangeInput">Exchange</label>
-            <input type="text" size="30" name="exchange" id="exchangeInput" class="form-control">
-        </div>
-        <div class="form-group">
-            <label for="symbolInput">Symbol</label>
-            <input type="text" size="30" name="symbol" id="symbolInput" class="form-control">
-        </div>
-        <button type="submit" class="btn btn-default">Add</button>
-    </form>
 </div>
 {% endblock %}

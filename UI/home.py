@@ -36,7 +36,7 @@ def home():
 
         stock_rows.append(stock_row_item)
 
-    return render_template('data.html', date_header=date_header, stock_rows=stock_rows)
+    return render_template('home.html', date_header=date_header, stock_rows=stock_rows)
 
 @app.route('/add', methods=['POST'])
 def add_stock():
