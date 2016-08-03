@@ -4,7 +4,7 @@ class Base(object):
     """Base class for operation"""
     def __init__(self, logger=None, tx=None):
         self.logger = logger if logger else Logger.get(self.__class__.__name__)
-        self.tx = None
+        self.tx = tx
         self.reply = None
 
     def run(self):

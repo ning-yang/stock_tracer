@@ -12,9 +12,8 @@ class TestAddStock(DBUnitTest):
         """test_add_stock_succeed"""
         add_stock_op = AddStockOperation(exchange="NASDAQ", symbol="AAPL", logger=self.logger)
         result = add_stock_op.run()
-        json_result = json.loads(result)
-        assert json_result['stock_id'] == '1'
-        assert json_result['symbol'] == 'AAPL'
+        assert result['stock_id'] == '1'
+        assert result['symbol'] == 'AAPL'
 
         with transaction() as tx:
             stock = tx.query(Stock).first()
@@ -27,8 +26,15 @@ class TestAddStock(DBUnitTest):
             tx.add(Stock(exchange="NASDAQ", symbol="AAPL"))
 
         add_stock_op = AddStockOperation(exchange="NASDAQ", symbol="AAPL", logger=self.logger)
+        result = add_stock_op.run()
+
+        assert result['stock_id'] == '1'
+
+    def test_add_stock_invalid_request(self):
+        """test_add_stock_invalid_request"""
+        add_stock_op = AddStockOperation(exchange="zzzz", symbol="xxxx", logger=self.logger)
 
         with pytest.raises(Exception) as exc_info:
             add_stock_op.run()
 
-        assert "Duplicate" in exc_info.value.message
+        assert 400 == exc_info.value.code

@@ -16,6 +16,14 @@
         <div class="header clearfix">
             <h1>Stock Tracer</h1>
         </div>
+        <div class="row">
+            {% if message %}
+            <div class="alert alert-{{message.type}} fade in">
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                {{ message.value | safe}}
+            </div>
+            {% endif %}
+        </div>
         {% block body %}{% endblock %}
     </div>
     <footer class='footer'>

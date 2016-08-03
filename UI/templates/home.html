@@ -10,11 +10,11 @@
         <form class="form-inline" action="{{ url_for('add_stock') }}" method="post">
             <div class="form-group">
                 <label class="sr-only" for="exchangeInput">Exchange</label>
-                <input type="text" size="30" name="exchange" id="exchangeInput" placeholder="Exchange" class="form-control">
+                <input type="text" size="30" name="exchange" id="exchangeInput" placeholder="Exchange" class="form-control" required>
             </div>
             <div class="form-group">
                 <label class="sr-only" for="symbolInput">Symbol</label>
-                <input type="text" size="30" name="symbol" id="symbolInput" placeholder="Symbol" class="form-control">
+                <input type="text" size="30" name="symbol" id="symbolInput" placeholder="Symbol" class="form-control" required>
             </div>
             <button type="submit" class="btn btn-success">Add New Stock</button>
         </form>

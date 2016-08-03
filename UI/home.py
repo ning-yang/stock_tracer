@@ -1,8 +1,9 @@
 import json
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, session
 from stock_tracer.common import MQClient
 
 app = Flask(__name__)
+app.secret_key = '\x14o\x93\xa5\xfe\xc1\xa8\xd2\x1b\xd1H\xd1\xfb=\xfd\x02\xff\x01\xa6 \x14g\xebr'
 
 @app.route("/")
 def home():
@@ -36,7 +37,7 @@ def home():
 
         stock_rows.append(stock_row_item)
 
-    return render_template('home.html', date_header=date_header, stock_rows=stock_rows)
+    return render_template('home.html', date_header=date_header, stock_rows=stock_rows, message=session.pop('message', None))
 
 @app.route('/add', methods=['POST'])
 def add_stock():
@@ -49,9 +50,17 @@ def add_stock():
     request_body['payload']['exchange'] = request.form['exchange']
     request_body['payload']['symbol'] = request.form['symbol']
     app.logger.info(request_body)
-    responce = client.call(request_body)
+    reply = client.call(request_body)
 
-    return responce
+    if 'error' in reply:
+        session['message'] = {'type': 'danger',
+                              'value': '<strong>Error!</strong> Stock {0}:{1} is not valid. Please double check.'.format(request.form['exchange'], request.form['symbol'])}
+    else:
+        stock = json.loads(reply)
+        session['message'] = {'type': 'success',
+                              'value': "New Stock {0}:{1} has been added.".format(stock['exchange'], stock['symbol'])}
+
+    return redirect(url_for('home'))
 
 @app.route('/stock/<stock_id>')
 def stock_detail(stock_id):
