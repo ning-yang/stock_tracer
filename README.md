@@ -7,6 +7,8 @@ Personal Project to track history data for stocks. Including:
 - Backed Service: serving UI api query
 - Woker: refresh quotes data 
 
+Details can be found [Here](http://ningy.me/2016/07/stock-tracer-design/)
+
 ## Stacks
 - mysql
 - rabbitmq
