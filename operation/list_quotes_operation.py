@@ -2,6 +2,7 @@ import datetime
 from stock_tracer import StockTracerService
 from stock_tracer.common import transaction, API
 from stock_tracer.model import Quote
+from stock_tracer.scheduler import UpdateQuoteAction
 from stock_tracer.operation.base import Base
 
 @API(StockTracerService, "list_quotes")
@@ -46,5 +47,8 @@ class ListQuotesOperation(Base):
                     'change_percentage': quote.change_percentage
                 }
                 responce[quote.stock_id]['quotes'].append(quote_dict)
+
+            update_quote_action = tx.query(UpdateQuoteAction).first()
+            responce['last_update'] = str(update_quote_action.last_update_time)
 
         self.reply = responce

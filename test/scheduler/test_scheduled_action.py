@@ -13,8 +13,7 @@ class TestScheduledAction(DBUnitTest):
         """
         super(TestScheduledAction, self).setup_method(method)
         utc_now = datetime.utcnow()
-        act_time = utc_now + timedelta(hours=1)
-        self.act_time = act_time - timedelta(microseconds=act_time.microsecond)
+        self.act_time = utc_now - timedelta(microseconds=utc_now.microsecond)
 
     def test_create_scheduled_action(self):
         """test_create_scheduled_action"""

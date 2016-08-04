@@ -1,4 +1,4 @@
-from datetime import timedelta
+from datetime import timedelta, datetime
 from sqlalchemy import Column, Integer, DateTime, Boolean, String, func
 from stock_tracer.common import transaction, Logger, ExportableMixin, Error
 from stock_tracer.model.base import Base
@@ -11,6 +11,7 @@ class ScheduledAction(Base, ExportableMixin):
     action_date = Column(DateTime, nullable=False)
     in_progress = Column(Boolean, default=False)
     interval_in_second = Column(Integer, default=60)
+    last_update_time = Column(DateTime, nullable=True)
     type = Column(String(20))
 
     __mapper_args__ = {
@@ -50,8 +51,9 @@ class ScheduledAction(Base, ExportableMixin):
 
     def complete(self):
         """complete_operation"""
-        self.logger.info("Finish executing:{0}".format(self))
         with transaction() as tx:
             tx.add(self)
             self.action_date += timedelta(seconds=self.interval_in_second)
             self.in_progress = False
+            self.last_update_time = datetime.utcnow()
+        self.logger.info("Finish executing:{0}".format(self))

@@ -1,4 +1,5 @@
 import json
+import datetime
 from flask import Flask, render_template, request, redirect, url_for, session
 from stock_tracer.common import MQClient
 
@@ -17,6 +18,12 @@ def home():
         return "error!{}".format(str(reply))
 
     stock_quotes = json.loads(reply)
+    last_update_time = stock_quotes.pop('last_update', None)
+
+    if last_update_time:
+        last_update_time = datetime.datetime.strptime(last_update_time, '%Y-%m-%d %H:%M:%S')
+        timediff = datetime.datetime.utcnow() - last_update_time
+
     date_header = []
     for stock_quote in stock_quotes.itervalues():
         for quote in stock_quote['quotes']:
@@ -37,7 +44,11 @@ def home():
 
         stock_rows.append(stock_row_item)
 
-    return render_template('home.html', date_header=date_header, stock_rows=stock_rows, message=session.pop('message', None))
+    return render_template('home.html',
+                           date_header=date_header,
+                           stock_rows=stock_rows,
+                           last_update=int(timediff.total_seconds() / 60) if last_update_time else None,
+                           message=session.pop('message', None))
 
 @app.route('/add', methods=['POST'])
 def add_stock():

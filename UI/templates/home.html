@@ -3,7 +3,8 @@
 <div class="row">
     <div class="col-md-4">
         <form action="{{ url_for('refresh_quotes') }}" method="post">
-            <button type="submit" class="btn btn-info"><i class="fa fa-refresh" aria-hidden="true"></i> Refresh</button>
+            <button type="submit" class="btn btn-primary"><i class="fa fa-refresh" aria-hidden="true"></i> Refresh</button>
+            <span class="label label-info">Last update: <strong>{{ last_update }}</strong> min ago</span>
         </form>
     </div>
     <div class="col-md-8">

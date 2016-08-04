@@ -10,7 +10,7 @@ def stock():
         tx.add(Stock(exchange="NASDAQ", symbol="AAPL"))
 
 @pytest.fixture
-def update_quote_action(stock):
+def update_quote_action():
     utc_now = datetime.utcnow()
     act_time = utc_now - timedelta(hours=1)
     act_time -= timedelta(microseconds=act_time.microsecond)

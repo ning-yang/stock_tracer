@@ -5,6 +5,7 @@ from stock_tracer.operation import RefreshQuotesOperation
 from stock_tracer.test.base import DBUnitTest
 from stock_tracer.test.fixtures import *
 
+@pytest.mark.usefixtures("stock")
 @pytest.mark.usefixtures("update_quote_action")
 class TestRefreshQuotesOperation(DBUnitTest):
     """TestRefreshQuotesOperation"""
